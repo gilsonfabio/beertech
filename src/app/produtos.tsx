@@ -1,0 +1,76 @@
+import React, { useState, useEffect } from 'react';
+import {Pressable, StatusBar, View, Text, Image, FlatList, StyleSheet} from "react-native"
+import { AntDesign } from '@expo/vector-icons';
+import { useNavigation, useRouter, useLocalSearchParams, Link } from "expo-router";
+
+import {api} from '@/server/api';
+import LisProdutos from '@/components/lisProdutos';
+
+
+type produtoProps = {
+    prdId: string;
+    prdDescricao: string;
+    prdReferencia: string;
+    prdGrupo: number;
+    prdLinha: number;
+    prdCstUnitario: number;
+    prdVdaUnitario: number;
+    prdQtdEstoque: number;
+    prdDscPermitido: number;
+    prdStatus: string;
+    prdUrlPhoto: string;
+}
+
+export default function Produtos() {
+    const [produtos, setProdutos] = useState<Array<produtoProps>>([]);
+
+    const navigation = useNavigation();
+    const router = useRouter();
+    const { id, name } = useLocalSearchParams()
+
+    useEffect(() => {
+        
+        api({
+            method: 'get',    
+            url: `produtos`,                 
+        }).then(function(resp) {
+            setProdutos(resp.data)
+        }).catch(function(error) {
+            alert(`Falha no acesso as produtos! Tente novamente.`);
+        })
+                          
+    }, []);
+
+    return(
+        <View style={styles.container}>            
+            <View style={styles.boxTitle}>
+                <Text style={styles.txtTitle}>Destaques</Text>
+            </View>
+            <FlatList
+                data={produtos}
+                horizontal={false}
+                numColumns={2}
+                renderItem={({item}) => <LisProdutos data={item} />}
+                keyExtractor={(item) => item.prdId}
+            />
+        </View>
+    )
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,          
+    },
+
+    boxTitle: {
+        width: "100%",
+        height: 35,
+    },
+
+    txtTitle: {
+        marginTop: 10,
+        fontSize: 14,
+        fontWeight: '500',
+        marginLeft: 10,
+    },
+})
