@@ -25,7 +25,7 @@ export default function Dashboard(){
                     <Text style={styles.infSld}>R$ 123,00</Text>
                 </View>
                 <View style={styles.boxRecarga}>
-                    <Link href={{pathname: "/login"}} asChild>
+                    <Link href={{pathname: "/recarga"}} asChild>
                         <Pressable style={styles.button}>
                             <Text style={styles.txtButton}>RECARGA</Text>
                         </Pressable>

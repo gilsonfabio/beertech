@@ -1,7 +1,9 @@
-import { View, Text, StyleSheet, ImageBackground, Image, Pressable} from "react-native"
+import React, { useState, useEffect } from 'react'
+import { View, Text, StyleSheet, ImageBackground, Image, Pressable, useWindowDimensions} from "react-native"
 import { Link } from "expo-router"
 
 export default function Index(){
+    const {height, width, scale, fontScale} = useWindowDimensions();
     return(
         <View style={styles.container}>
             <ImageBackground source={require('@/assets/images/banner.jpg')} alt="" resizeMode="cover" style={styles.image}>
@@ -27,7 +29,7 @@ export default function Index(){
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
     },
 
     imgLogo: {
