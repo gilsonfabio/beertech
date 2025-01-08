@@ -48,7 +48,7 @@ export default function Recarga(){
                     <Text style={styles.label}>Escolha Forma de Pagamento</Text>
                 </View>
                 <View style={styles.button}>
-                <Link href={{pathname: "./pagtopix"}} asChild >
+                <Link href={{pathname: "./pagtopix", params: {idUsr, name, title, creValor}}} asChild >
                     <Pressable>
                         <Text style={styles.txtButton}>Pagamento via PIX</Text>
                     </Pressable>
@@ -58,6 +58,8 @@ export default function Recarga(){
         </View>
     )
 }
+
+// router.push({ pathname: "/screens/PagtoPix", params: {idUsr, name, vlrRec, idCre} });
 
 const styles = StyleSheet.create({
     container: {

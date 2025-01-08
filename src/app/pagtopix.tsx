@@ -13,8 +13,8 @@ type imgProps = {
 type local = {
     idUsr: string;
     name: string;
-    vlrRec: string;
-    idCre: string;
+    title: string;
+    creValor: string;
 }
 
 export default function PagtoPix(){
@@ -32,7 +32,7 @@ export default function PagtoPix(){
             data: {
               creUsrId: local.idUsr,  
               creId: local.idCre,
-              creValor: local.vlrRec,   
+              creValor: local.creValor,   
             }
         }).then(function(response) {
             //setState({base64File: 'data:image/png;base64' + response.data.imagemQrcode});

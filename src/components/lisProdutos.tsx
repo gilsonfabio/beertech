@@ -46,11 +46,11 @@ const LisProdutos = ({ data }:any) => {
 
   return (
     <View style={styles.container}>
-    <Link href={{pathname: "/", params: { id: data.prdId, idUsr, name, title}}} asChild>
+    //<Link href={{pathname: "./Prodetalhe/[id]", params: { id: data.prdId, idUsr, name, title}}} asChild>
     <TouchableOpacity>
       <View style={styles.box}>
         <View>
-          <Image source={{uri: `https://thumbs2.imgbox.com/20/58/Pun6sjvo_t.png`}} resizeMode="cover" style={styles.imgLogo} />
+          <Image source={{uri: `https://thumbs2.imgbox.com/${data.prdUrlPhoto}`}} resizeMode="cover" style={styles.imgLogo} />
           <View style={styles.boxDescricao}>
             <Text style={styles.txtDescricao}>{data.prdDescricao}</Text>
           </View>
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     },
 
     imgLogo: {
-        width: 190,
+        width: 180,
         height: 200,
         alignItems: 'center',
         borderRadius: 10,      

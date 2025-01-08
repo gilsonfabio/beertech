@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
     },
 
     imgLogo: {
-        width: 200,
-        height: 200,
+        width: 150,
+        height: 150,
         alignItems: 'center'      
     }, 
 
@@ -44,18 +44,18 @@ const styles = StyleSheet.create({
     },
 
     boxTitle: {
-        marginTop: 100,
-        marginBottom: 100,
+        marginTop: 60,
+        marginBottom: 80,
     },
 
     txtTitle: {
-        fontSize: 45,
+        fontSize: 35,
         color: "#FFF",
         textAlign: 'center',
     },
 
     button: {
-        width: 300,
+        width: 250,
         height: 60,
         backgroundColor: "#facc15",
         borderRadius: 12,
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     },
 
     txtButton: {
-        fontSize: 22,
+        fontSize: 20,
         fontWeight: 'bold',
         color: "#000",
         textAlign: 'center',

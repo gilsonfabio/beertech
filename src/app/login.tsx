@@ -23,12 +23,13 @@ export default function Login(){
           })
           let id = response.data.id;  
           let nomCliente = response.data.name;
-          router.push(`/dashboard?idUsr=${id}&name=${nomCliente}&title=${title}` as any );          
+          let saldo = response.data.saldo;
+          router.push(`/dashboard?idUsr=${id}&name=${nomCliente}&title=${title}&saldo=${saldo}` as any );          
         } catch (error) {
           if (isAxiosError(error)) {
             return Alert.alert(error.response?.data)
           }
-          Alert.alert("NÃ£o foi possÃ­vel entrar.")
+          Alert.alert("Não foi possÃ­vel entrar.")
         }
     }
 
@@ -60,7 +61,7 @@ export default function Login(){
                 value={password} 
             />
             <Pressable style={styles.button} onPress={handleSignIn}>
-                <Text style={styles.txtButton}>Entar</Text>
+                <Text style={styles.txtButton}>Entrar</Text>
             </Pressable>
         </View>
     )

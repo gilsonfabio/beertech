@@ -10,6 +10,7 @@ export default function RootLayout(){
             <Stack.Screen name="dashboard" options={{title:'Dashboard', headerShown: false}} />
             <Stack.Screen name="recarga" options={{title:'Recarga', headerShown: false}} />
             <Stack.Screen name="pagtopix" options={{title:'PagtoPix', headerShown: false}} />
+            <Stack.Screen name="ProDetalhes" options={{title:'Detalhes', headerShown: false}} />
         </Stack>
     )
 }

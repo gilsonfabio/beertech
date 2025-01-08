@@ -9,12 +9,13 @@ type paramsProps = {
     idUsr: string;
     name: string;
     title: string;
+    saldo: string;
 }
 
 export default function Dashboard(){
     const navigation = useNavigation();
     const router = useRouter();
-    const { idUsr, name, title } = useLocalSearchParams<paramsProps>();
+    const { idUsr, name, title, saldo } = useLocalSearchParams<paramsProps>();
 
     return(
         <View style={styles.container}>
@@ -22,10 +23,10 @@ export default function Dashboard(){
             <View style={styles.box}>
                 <View style={styles.boxSaldo}>
                     <Text style={styles.txtSld}>Saldo Atual</Text>
-                    <Text style={styles.infSld}>R$ 123,00</Text>
+                    <Text style={styles.infSld}>R$ {saldo} </Text>
                 </View>
                 <View style={styles.boxRecarga}>
-                    <Link href={{pathname: "/recarga"}} asChild>
+                    <Link href={{pathname: "/recarga", params: {idUsr, name, title, saldo}}} asChild >
                         <Pressable style={styles.button}>
                             <Text style={styles.txtButton}>RECARGA</Text>
                         </Pressable>
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         alignItems: 'center',
         padding: 10,
-        marginRight: 75,
+        marginRight: 55,
     },
 
     txtSld: {
