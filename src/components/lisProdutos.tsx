@@ -3,17 +3,22 @@ import { TouchableOpacity, View, Image, Text, Dimensions, Pressable, StyleSheet}
 import {Link, router, useLocalSearchParams } from "expo-router";
 
 type produtoProps = {
-    prdId: string;
-    prdDescricao: string;
-    prdReferencia: string;
-    prdGrupo: number;
-    prdLinha: number;
-    prdCstUnitario: number;
-    prdVdaUnitario: number;
-    prdQtdEstoque: number;
-    prdDscPermitido: number;
-    prdStatus: string;
-    prdUrlPhoto: string;
+  idProd: string; 
+    proDescricao: string; 
+    proReferencia: string; 
+    proSegmento: number;
+    proMarca: number; 
+    proGrupo: number; 
+    proLinha: number; 
+    proCodBarra: string; 
+    proUnidade: string; 
+    proCodNcm: string; 
+    proUltCusto: number; 
+    proPreVenda: number; 
+    proTributacao: string; 
+    proCodCst: string; 
+    proStatus: string; 
+    proAvatar: string;
 }
 
 type paramsProps = {
@@ -46,25 +51,25 @@ const LisProdutos = ({ data }:any) => {
 
   return (
     <View style={styles.container}>
-    //<Link href={{pathname: "./Prodetalhe/[id]", params: { id: data.prdId, idUsr, name, title}}} asChild>
-    <TouchableOpacity>
-      <View style={styles.box}>
-        <View>
-          <Image source={{uri: `https://thumbs2.imgbox.com/${data.prdUrlPhoto}`}} resizeMode="cover" style={styles.imgLogo} />
-          <View style={styles.boxDescricao}>
-            <Text style={styles.txtDescricao}>{data.prdDescricao}</Text>
-          </View>
-          <View>
-            <Text>{data.prdReferencia}</Text>
-          </View>
-          <View>
-            <Text>R$ {data.prdVdaUnitario}</Text>
-            <Text>/cada</Text>
-          </View>
-        </View>             
-      </View>  
-    </TouchableOpacity>
-    </Link>
+      <Link href={{pathname: "./Prodetalhe/[id]", params: { id: data.idProd, idUsr, name, title}}} asChild>
+        <TouchableOpacity>
+          <View style={styles.box}>
+            <View>
+              <Image source={{uri: `https://thumbs2.imgbox.com/${data.proAvatar}`}} resizeMode="cover" style={styles.imgLogo} />
+              <View style={styles.boxDescricao}>
+                <Text style={styles.txtDescricao}>{data.proDescricao}</Text>
+              </View>
+              <View>
+                <Text>{data.proReferencia}</Text>
+              </View>
+              <View>
+                <Text>R$ {data.proPreVenda}</Text>
+                <Text>/cada</Text>
+              </View>
+            </View>             
+          </View>  
+        </TouchableOpacity>
+      </Link>
     </View>
   );
 };

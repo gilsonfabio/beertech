@@ -6,19 +6,23 @@ import { useNavigation, useRouter, useLocalSearchParams, Link } from "expo-route
 import {api} from '@/server/api';
 import LisProdutos from '@/components/lisProdutos';
 
-
 type produtoProps = {
-    prdId: string;
-    prdDescricao: string;
-    prdReferencia: string;
-    prdGrupo: number;
-    prdLinha: number;
-    prdCstUnitario: number;
-    prdVdaUnitario: number;
-    prdQtdEstoque: number;
-    prdDscPermitido: number;
-    prdStatus: string;
-    prdUrlPhoto: string;
+    idProd: string; 
+    proDescricao: string; 
+    proReferencia: string; 
+    proSegmento: number;
+    proMarca: number; 
+    proGrupo: number; 
+    proLinha: number; 
+    proCodBarra: string; 
+    proUnidade: string; 
+    proCodNcm: string; 
+    proUltCusto: number; 
+    proPreVenda: number; 
+    proTributacao: string; 
+    proCodCst: string; 
+    proStatus: string; 
+    proAvatar: string;
 }
 
 export default function Produtos() {
@@ -51,7 +55,7 @@ export default function Produtos() {
                 horizontal={false}
                 numColumns={2}
                 renderItem={({item}) => <LisProdutos data={item} />}
-                keyExtractor={(item) => item.prdId}
+                keyExtractor={(item) => item.idProd}
             />
         </View>
     )

@@ -1,6 +1,7 @@
 import React, { useState } from "react"
-import { View, Text, StyleSheet, TextInput, Pressable } from "react-native"
+import { View, Text, StyleSheet, TextInput, Pressable, Alert } from "react-native"
 import { useLocalSearchParams, router, Link} from 'expo-router'
+import { isAxiosError } from "axios"
 
 import { api } from '@/server/api';
 import Header from "@/components/header";
@@ -18,7 +19,7 @@ type paramsProps = {
     title: string;
     saldo: string;    
 }
-
+ 
 export default function Recarga(){
     const [vlrRec, setVlrRec] = useState('');
 
@@ -28,6 +29,24 @@ export default function Recarga(){
     const [creUsrId, setCreUsrId] = useState('');
     const [idCre, setIdCre] = useState(0);
     const [creValor, setCreValor] = useState('');
+
+
+    async function GeraNovCredito() {
+        try {
+            const response = await api.post(`/newcredito`, {
+                creUsrId: idUsr, 
+                creValor: vlrRec, 
+            }) 
+            router.push(`/pagtopix", params: {idUsr, name, title, creValor` as any );          
+        } catch (error) {
+            if (isAxiosError(error)) {
+                return Alert.alert(error.response?.data)
+            }
+          Alert.alert("Não foi possÃ­vel entrar.")
+        }
+    }
+
+
 
     return(
         <View style={styles.container}>
