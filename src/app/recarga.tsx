@@ -46,8 +46,6 @@ export default function Recarga(){
         }
     }
 
-
-
     return(
         <View style={styles.container}>
             <Header user={idUsr} nomUser={name} sysTitle={title} />
@@ -67,11 +65,9 @@ export default function Recarga(){
                     <Text style={styles.label}>Escolha Forma de Pagamento</Text>
                 </View>
                 <View style={styles.button}>
-                <Link href={{pathname: "./pagtopix", params: {idUsr, name, title, creValor}}} asChild >
-                    <Pressable>
+                    <Pressable onPress={GeraNovCredito}>
                         <Text style={styles.txtButton}>Pagamento via PIX</Text>
                     </Pressable>
-                </Link>
                 </View>    
             </View>  
         </View>

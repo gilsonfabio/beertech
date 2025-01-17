@@ -11,6 +11,7 @@ export default function RootLayout(){
             <Stack.Screen name="recarga" options={{title:'Recarga', headerShown: false}} />
             <Stack.Screen name="pagtopix" options={{title:'PagtoPix', headerShown: false}} />
             <Stack.Screen name="Prodetalhe/[id]" options={{title:'Detalhes', headerShown: false}} />
+            <Stack.Screen name="cronometro" options={{title:'Cronometro', headerShown: false}} />
         </Stack>
     )
 }
