@@ -8,21 +8,26 @@ import Header from '@/components/header';
 import { isAxiosError } from "axios"
 
 type produtoProps = {
-    idProd: string;
-    proDescricao: string;
-    proReferencia: string;
+    idProd: string; 
+    proDescricao: string; 
+    proReferencia: string; 
     proSegmento: number;
-    proMarca: number;
-    proGrupo: number;
-    proLinha: number;
-    proCodBarra: number;
-    proUnidade: string;
-    proCodNcm: number;
+    proMarca: number; 
+    proGrupo: number; 
+    proLinha: number; 
+    proCodBarra: string; 
+    proUnidade: string; 
+    proCodNcm: string; 
     proUltCusto: number;
-    proPreVenda: number;
-    proTributacao: string;
-    proCodCst: number;
-    proStatus: string;
+    proQtdPeq: number; 
+    proPreVdaPeq: number; 
+    proQtdMed: number; 
+    proPreVdaMed: number;
+    proQtdGrd: number;  
+    proPreVdaGrd: number; 
+    proTributacao: string; 
+    proCodCst: string; 
+    proStatus: string; 
     proAvatar: string;
 }
 
@@ -40,8 +45,12 @@ export default function Prodetalhe(){
     const [proAvatar, setProAvatar] = useState('');
     const [proDescricao, setProDescricao] = useState('');
     const [proReferencia, setProReferencia] = useState('');
-    const [proVlrVenda, setProVlrVenda] = useState('');
-
+    const [proVdaPeq, setProVdaPeq] = useState(0);
+    const [proQtdPeq, setProQtdPeq] = useState(0);
+    const [proVdaMed, setProVdaMed] = useState(0);
+    const [proQtdMed, setProQtdMed] = useState(0);
+    const [proVdaGrd, setProVdaGrd] = useState(0);
+    const [proQtdGrd, setProQtdGrd] = useState(0);
     const [atualiza, setAtualiza] = useState(0);
     const [qtde, setQtde] = useState(0);
     const [vlrTotal, setVlrTotal] = useState(0);
@@ -82,25 +91,78 @@ export default function Prodetalhe(){
             setProAvatar(response.data.proAvatar)
             setProDescricao(response.data.proDescricao)
             setProReferencia(response.data.proReferencia)
-            setProVlrVenda(response.data.proPreVenda)
-            
-            setQtde(qtde + 1) 
-            setVlrTotal(response.data.proPreVenda)
-        
+            setProVdaPeq(response.data.proPreVdaPeq)
+            setProQtdPeq(response.data.proQtdPeq)
+            setProVdaMed(response.data.proPreVdaMed)
+            setProQtdMed(response.data.proQtdMed)
+            setProVdaGrd(response.data.proPreVdaGrd)
+            setProQtdGrd(response.data.proQtdGrd)             
         }).catch(function(error) {
             alert(`Falha no acesso ao produto! Tente novamente.`);
         })       
                                   
     }, []);
 
-    async function onPress() {
-        try {
-          router.push(`/cronometro` as any );          
-        } catch (error) {
-          if (isAxiosError(error)) {
-            return Alert.alert(error.response?.data)
-          }
-          Alert.alert("Não foi possÃ­vel entrar.")
+    useEffect(() => {
+        let id = local.idUsr;
+        api({
+            method: 'get',    
+            url: `searchSaldo/${id}`,                 
+        }).then(function(resp) {
+            setUser(resp.data[0].usrId)
+            setUsrNome(resp.data[0].usrNome)  
+            setUsrSaldo(resp.data[0].usrSldDisponivel)        
+        }).catch(function(error) {
+            alert(`Falha no acesso do saldo do usuário! Tente novamente.`);
+        }) 
+                                 
+    }, [atualiza]);
+
+    async function onPressPeq() {
+        setAtualiza(atualiza + 1 );
+        if (usrSaldo >= proVdaPeq) {
+            try {
+              router.push(`/cronometro?idUsr=${local.idUsr}&name=${nomUsuario}&idPro=${local.id}&qtde=${proQtdPeq}&valor=${proVdaPeq}&saldo=${usrSaldo}` as any );         
+            } catch (error) {
+                if (isAxiosError(error)) {
+                    return Alert.alert(error.response?.data)
+                }
+                Alert.alert("Não foi possÃ­vel entrar.")
+            }
+        }else {
+            Alert.alert("Saldo Insuficiente! Favor recaregar seu saldo.")
+        }
+    }
+
+    async function onPressMed() {
+        setAtualiza(atualiza + 1 );
+        if (usrSaldo >= proVdaMed) {
+            try {
+              router.push(`/cronometro?idUsr=${local.idUsr}&idPro=${local.id}&qtde=${proQtdMed}&valor=${proVdaMed}` as any );         
+            } catch (error) {
+                if (isAxiosError(error)) {
+                    return Alert.alert(error.response?.data)
+                }
+                Alert.alert("Não foi possÃ­vel entrar.")
+            }
+        }else {
+            Alert.alert("Saldo Insuficiente! Favor recaregar seu saldo.")
+        }
+    }
+
+    async function onPressGrd() {
+        setAtualiza(atualiza + 1 );
+        if (usrSaldo >= proVdaPeq) {
+            try {
+              router.push(`/cronometro?idUsr=${local.idUsr}&idPro=${local.id}&qtde=${proQtdGrd}&valor=${proVdaGrd}` as any );         
+            } catch (error) {
+                if (isAxiosError(error)) {
+                    return Alert.alert(error.response?.data)
+                }
+                Alert.alert("Não foi possÃ­vel entrar.")
+            }
+        }else {
+            Alert.alert("Saldo Insuficiente! Favor recaregar seu saldo.")
         }
     }
 
@@ -120,41 +182,41 @@ export default function Prodetalhe(){
             </View>     
             <View style={styles.boxTamanho}>
                 <View style={styles.button}>
-                    <Pressable onPress={onPress}> 
+                    <Pressable onPress={onPressPeq}> 
                         <View style={styles.boxImg}>                      
                             <Ionicons name="beer" size={30} color="black" />
                         </View>
                         <View>                      
-                            <Text style={styles.txtPeq} >100 ml</Text>
+                            <Text style={styles.txtPeq} >{proQtdPeq} ml</Text>
                         </View>
                         <View>                      
-                            <Text style={styles.prcPeq}>R$ 3,00</Text>
+                            <Text style={styles.prcPeq}>R${Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(proVdaPeq)}</Text>
                         </View>
                     </Pressable>
                 </View>
                 <View style={styles.button}>
-                    <TouchableOpacity onPress={onPress}> 
+                    <TouchableOpacity onPress={onPressMed}> 
                         <View style={styles.boxImg}>                      
                             <Ionicons name="beer" size={40} color="black" style={styles.imgPeq}/>
                         </View>
                         <View>                      
-                            <Text style={styles.txtMed}>300 ml</Text>
+                            <Text style={styles.txtMed}>{proQtdMed} ml</Text>
                         </View>
                         <View >                      
-                            <Text style={styles.prcMed}>R$ 7,00</Text>
+                            <Text style={styles.prcMed}>R${Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(proVdaMed)}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.button}>
-                    <TouchableOpacity onPress={onPress}> 
+                    <TouchableOpacity onPress={onPressGrd}> 
                         <View style={styles.boxImg}>                      
                             <Ionicons name="beer" size={60} color="black" />
                         </View>
                         <View >                      
-                            <Text style={styles.txtGrd}>500 ml</Text>
+                            <Text style={styles.txtGrd}>{proQtdGrd} ml</Text>
                         </View>
                         <View >                      
-                            <Text style={styles.prcGrd}>R$ 9,00</Text>
+                            <Text style={styles.prcGrd}>R$ {Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(proVdaGrd)}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>

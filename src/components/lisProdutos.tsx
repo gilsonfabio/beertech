@@ -4,21 +4,26 @@ import {Link, router, useLocalSearchParams } from "expo-router";
 
 type produtoProps = {
   idProd: string; 
-    proDescricao: string; 
-    proReferencia: string; 
-    proSegmento: number;
-    proMarca: number; 
-    proGrupo: number; 
-    proLinha: number; 
-    proCodBarra: string; 
-    proUnidade: string; 
-    proCodNcm: string; 
-    proUltCusto: number; 
-    proPreVenda: number; 
-    proTributacao: string; 
-    proCodCst: string; 
-    proStatus: string; 
-    proAvatar: string;
+  proDescricao: string; 
+  proReferencia: string; 
+  proSegmento: number;
+  proMarca: number; 
+  proGrupo: number; 
+  proLinha: number; 
+  proCodBarra: string; 
+  proUnidade: string; 
+  proCodNcm: string; 
+  proUltCusto: number;
+  proQtdPeq: number; 
+  proPreVdaPeq: number; 
+  proQtdMed: number; 
+  proPreVdaMed: number;
+  proQtdGrd: number;  
+  proPreVdaGrd: number; 
+  proTributacao: string; 
+  proCodCst: string; 
+  proStatus: string; 
+  proAvatar: string;
 }
 
 type paramsProps = {
@@ -63,8 +68,8 @@ const LisProdutos = ({ data }:any) => {
                 <Text>{data.proReferencia}</Text>
               </View>
               <View>
-                <Text>R$ {data.proPreVenda}</Text>
-                <Text>/cada</Text>
+                <Text style={styles.txtPreco}>R$ {Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(Number(data.proPreVdaGrd))}</Text>
+                <Text>/500ml. cada</Text>
               </View>
             </View>             
           </View>  
@@ -105,5 +110,14 @@ const styles = StyleSheet.create({
     txtDescricao: {
         fontSize: 15,
         fontWeight: '500'
-    }
+    },
+
+    txtPreco: {
+      backgroundColor: "#dc2626",
+      color: "#FFF",
+      borderRadius: 10,
+      fontWeight: '500',
+      padding: 5,
+    },
+
 })

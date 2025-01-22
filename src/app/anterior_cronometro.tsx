@@ -1,81 +1,95 @@
 import { useState, useEffect } from "react";
 import { Pressable, Text, View, StyleSheet } from "react-native";
-import { useNavigation, useRouter, useLocalSearchParams} from "expo-router";
+import { useRouter } from "expo-router";
 
-import { api } from "@/server/api";
 import { apicontrol } from "@/server/apicontrol";
 
 export default function Cronometro() {
     const router = useRouter();
-    const local = useLocalSearchParams();
-    const navigation = useNavigation();
-
     const [segundos, setSegundos] = useState(0);
     const [minutos, setMinutos] = useState(0);
     const [customInterval, setCustomInterval] = useState<NodeJS.Timer>();
     const [atualiza, setAtualiza] = useState(0);
 
-    const [count, setCount] = useState(0);
-    
-    let titulo = 'Consumo';
-
     useEffect(() => {
-        
+        /*
         apicontrol({
             method: 'get',    
             url: `?s=GCML1`,                 
         }).then(function(resp) {
-            setAtualiza(atualiza + 1) 
-        }).catch(function(error) {
-            alert(`Falha no acesso as produtos! Tente novamente.`);
-        })
-        
-        if (count <= 20) {
             setInterval(() => {
-                setCount(count + 1) 
-            }, 1000)
-        }else {
-            handleStop();
-        }     
-         
-    }, [count]);
+                changeTime()
+            }, 1000) 
 
-    const handleStop = () => {
-    
-        apicontrol({
-            method: 'get',    
-            url: `?s=GCMD1`,                 
-        }).then(function(resp) {
-            setAtualiza(atualiza + 1)
         }).catch(function(error) {
             alert(`Falha no acesso as produtos! Tente novamente.`);
         })
-            
-        api.post('newconsumo', {
-            conUsrId: local.idUsr,
-            conPrdId: local.idPro,
-            conPrdQtd: local.qtde,
-            conPrdVlr: local.valor,
-            sldDisponivel: local.saldo, 
-        }).then(() => {
-            alert('Consumo realizado com sucesso!')
-        }).catch(() => {
-            alert('Erro no cadastro!');
-        }) 
-        
-        router.back(); 
+        */
+        //setInterval(() => {
+        //    changeTime()
+        //}, 1000)                  
+    }, []);
+
+    const startTimer = () => {
+        setCustomInterval(
+            setInterval(() => {
+                if ( atualiza === 20) {
+                    router.back()
+                }else {
+                    changeTime()
+                }    
+            }, 1000) 
+        )
+    }
+
+    const stopTimer = () => {
+        if (customInterval) {
+            clearInterval(Number(customInterval))  
+        }
+    }
+
+    const clear = () => {
+        stopTimer();
+        setSegundos(0);
+        setMinutos(0);
+    }
+
+    const changeTime = () => {
+        setSegundos((prevState) => {
+            if (prevState == 20 ) {
+                setAtualiza(1)
+                return 0;
+            }
+            if (prevState + 1 == 60) {
+                setMinutos(minutos + 1)
+                return 0;
+            }                        
+            return prevState + 1;                 
+        })
     }
 
     return(
         <View style={styles.container}>
             <Text style={styles.txtContador}>
-                Teste de contador
-            </Text>
-            <Text style={styles.txtContador}>
-                {count}
+                {minutos < 10 ? "0" + minutos : minutos}:
+                {segundos < 10 ? "0" + segundos : segundos}
             </Text>
             <View style={styles.box}>
-                   
+                <View style={styles.boxPlay}>
+                    <Pressable onPress={startTimer}>
+                        <Text style={styles.txtPlay}>Iniciar</Text>
+                    </Pressable>
+                </View>    
+                <View style={styles.boxPause}>
+                    <Pressable onPress={stopTimer}>
+                        <Text style={styles.txtPause}>Pausar</Text>
+                    </Pressable>
+                </View>
+                <View style={styles.boxReset}>
+                    <Pressable onPress={clear}>
+                        <Text style={styles.txtReset}>Reset</Text>
+                    </Pressable>
+                </View>    
             </View>
         </View>
     )

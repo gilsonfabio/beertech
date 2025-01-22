@@ -5,6 +5,8 @@ import { useNavigation, useRouter, useLocalSearchParams, Link } from "expo-route
 import Header from "@/components/header";
 import Produtos from "./produtos";
 
+import { api } from '@/server/api';
+
 type paramsProps = {
     idUsr: string;
     name: string;
@@ -16,6 +18,7 @@ export default function Dashboard(){
     const navigation = useNavigation();
     const router = useRouter();
     const { idUsr, name, title, saldo } = useLocalSearchParams<paramsProps>();
+    const [usrSaldo, setUsrSaldo] = useState(0);
 
     return(
         <View style={styles.container}>
@@ -23,7 +26,7 @@ export default function Dashboard(){
             <View style={styles.box}>
                 <View style={styles.boxSaldo}>
                     <Text style={styles.txtSld}>Saldo Atual</Text>
-                    <Text style={styles.infSld}>R$ {saldo} </Text>
+                    <Text style={styles.infSld}>{Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(Number(saldo))} </Text>
                 </View>
                 <View style={styles.boxRecarga}>
                     <Link href={{pathname: "/recarga", params: {idUsr, name, title, saldo}}} asChild >

@@ -17,8 +17,13 @@ type produtoProps = {
     proCodBarra: string; 
     proUnidade: string; 
     proCodNcm: string; 
-    proUltCusto: number; 
-    proPreVenda: number; 
+    proUltCusto: number;
+    proQtdPeq: number; 
+    proPreVdaPeq: number; 
+    proQtdMed: number; 
+    proPreVdaMed: number;
+    proQtdGrd: number;  
+    proPreVdaGrd: number; 
     proTributacao: string; 
     proCodCst: string; 
     proStatus: string; 
