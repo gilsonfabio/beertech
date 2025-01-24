@@ -21,15 +21,17 @@ export default function Cronometro() {
 
     useEffect(() => {
         
-        apicontrol({
-            method: 'get',    
-            url: `?s=GCML1`,                 
-        }).then(function(resp) {
-            setAtualiza(atualiza + 1) 
-        }).catch(function(error) {
-            alert(`Falha no acesso as produtos! Tente novamente.`);
-        })
-        
+        if (atualiza === 0) {
+            apicontrol({
+                method: 'post',    
+                url: `?s=GMCL1`,                 
+            }).then(function(resp) {
+                setAtualiza(atualiza + 1) 
+            }).catch(function(error) {
+                alert(`Falha no acesso aos produtos! Tente novamente.`);
+            })
+        }
+
         if (count <= 20) {
             setInterval(() => {
                 setCount(count + 1) 
@@ -43,12 +45,12 @@ export default function Cronometro() {
     const handleStop = () => {
     
         apicontrol({
-            method: 'get',    
-            url: `?s=GCMD1`,                 
+            method: 'post',    
+            url: `?s=GMCD1`,                 
         }).then(function(resp) {
             setAtualiza(atualiza + 1)
         }).catch(function(error) {
-            alert(`Falha no acesso as produtos! Tente novamente.`);
+            alert(`Falha no acesso aos produtos! Tente novamente.`);
         })
             
         api.post('newconsumo', {
