@@ -6,6 +6,7 @@ import { api } from '@/server/api';
 import { useNavigation, useRouter, useLocalSearchParams, Link } from "expo-router";
 import Header from '@/components/header';
 import { isAxiosError } from "axios"
+import axios from 'axios';
 
 type produtoProps = {
     idProd: string; 
@@ -118,7 +119,21 @@ export default function Prodetalhe(){
                                  
     }, [atualiza]);
 
+    const postData = () => {
+        //console.log('2');
+        
+        fetch('http://192.168.0.100/?s=GMCL1', {
+            method: 'POST',
+        })
+        .then((response) => response.json())
+        .then((json) => console.log('Requisição ok!'));
+        //console.log('3');
+    };
+
     async function onPressPeq() {
+        //console.log('1')
+        postData();
+        //console.log('4')
         setAtualiza(atualiza + 1 );
         if (usrSaldo >= proVdaPeq) {
             try {

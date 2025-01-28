@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Pressable, Text, View, StyleSheet, Alert } from "react-native";
 import { useNavigation, useRouter, useLocalSearchParams} from "expo-router";
 
+
 import { api } from "@/server/api";
 import { apicontrol } from "@/server/apicontrol";
 
@@ -19,21 +20,9 @@ export default function Cronometro() {
     const [count, setCount] = useState(0);
     
     let titulo = 'Consumo';
-
+    
     useEffect(() => {
-        if (atualiza === 0) {
-            (async () => {
-                const rawResponse = await fetch('http://192.168.0.100/?s=GMCL1', {
-                  method: 'POST',
-                  headers: {
-                    'Accept': '*/*',
-                    'Content-Type': 'text/plain'
-                  },
-                });
-                const content = await rawResponse.json();              
-                Alert.alert(content)
-            })();
-        }
+ 
         setAtualiza(1)    
         if (count <= 20) {
             setInterval(() => {
@@ -68,18 +57,16 @@ export default function Cronometro() {
 
 */
     const handleStop = () => {
-        (async () => {
-            const rawResponse = await fetch('http://192.168.0.100/?s=GMCD1', {
-              method: 'POST',
-              headers: {
+        const rawResponse = fetch('http://192.168.0.100/?s=GMCD1', {
+            method: 'POST',
+            headers: {
                 'Accept': '*/*',
                 'Content-Type': 'text/plain'
-              },
-            });
-            const content = await rawResponse.json();              
-            //console.log(content);
-        })();
-
+            },
+        });
+        const content = rawResponse;              
+        //console.log(content);
+    
         api.post('newconsumo', {
             conUsrId: local.idUsr,
             conPrdId: local.idPro,
@@ -104,7 +91,7 @@ export default function Cronometro() {
                 {count}
             </Text>
             <View style={styles.box}>
-                   
+
             </View>
         </View>
     )

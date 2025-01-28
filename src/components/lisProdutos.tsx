@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState} from 'react';
 import { TouchableOpacity, View, Image, Text, Dimensions, Pressable, StyleSheet} from 'react-native';
 import {Link, router, useLocalSearchParams } from "expo-router";
 
@@ -52,7 +52,7 @@ const LisProdutos = ({ data }:any) => {
     //}        
   }
 
-    //<Link href={{pathname: "/Prodetalhes/[id]", params: { id: data.itePrmProId, idUsr, name, title}}} asChild>
+  //<Link href={{pathname: "/Prodetalhes/[id]", params: { id: data.itePrmProId, idUsr, name, title}}} asChild>
 
   return (
     <View style={styles.container}>
