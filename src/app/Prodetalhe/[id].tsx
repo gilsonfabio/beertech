@@ -190,7 +190,7 @@ export default function Prodetalhe(){
                             <Text style={styles.txtPeq} >{proQtdPeq} ml</Text>
                         </View>
                         <View>                      
-                            <Text style={styles.prcPeq}>R${Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(proVdaPeq)}</Text>
+                            <Text style={styles.prcPeq}>{Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(proVdaPeq)}</Text>
                         </View>
                     </Pressable>
                 </View>
@@ -203,7 +203,7 @@ export default function Prodetalhe(){
                             <Text style={styles.txtMed}>{proQtdMed} ml</Text>
                         </View>
                         <View >                      
-                            <Text style={styles.prcMed}>R${Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(proVdaMed)}</Text>
+                            <Text style={styles.prcMed}>{Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(proVdaMed)}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -216,7 +216,7 @@ export default function Prodetalhe(){
                             <Text style={styles.txtGrd}>{proQtdGrd} ml</Text>
                         </View>
                         <View >                      
-                            <Text style={styles.prcGrd}>R$ {Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(proVdaGrd)}</Text>
+                            <Text style={styles.prcGrd}>{Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(proVdaGrd)}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>

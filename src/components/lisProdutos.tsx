@@ -37,7 +37,7 @@ const LisProdutos = ({ data }:any) => {
   function handleDetalhes(){
     setTimeout(() => {
       handleGetToken()
-    }, 1000)        
+    }, 1000)         
   }
 
   const { idUsr, name, title } = useLocalSearchParams<paramsProps>();
@@ -68,7 +68,7 @@ const LisProdutos = ({ data }:any) => {
                 <Text>{data.proReferencia}</Text>
               </View>
               <View>
-                <Text style={styles.txtPreco}>R$ {Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(Number(data.proPreVdaGrd))}</Text>
+                <Text style={styles.txtPreco}>{Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(Number(data.proPreVdaGrd))}</Text>
                 <Text>/500ml. cada</Text>
               </View>
             </View>             

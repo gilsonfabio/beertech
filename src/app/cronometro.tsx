@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Pressable, Text, View, StyleSheet } from "react-native";
+import { Pressable, Text, View, StyleSheet, Alert } from "react-native";
 import { useNavigation, useRouter, useLocalSearchParams} from "expo-router";
 
 import { api } from "@/server/api";
@@ -15,23 +15,47 @@ export default function Cronometro() {
     const [customInterval, setCustomInterval] = useState<NodeJS.Timer>();
     const [atualiza, setAtualiza] = useState(0);
 
+    const [baseUrl, setBaseUrl] = useState('');
     const [count, setCount] = useState(0);
     
     let titulo = 'Consumo';
 
     useEffect(() => {
-        
         if (atualiza === 0) {
-            apicontrol({
-                method: 'post',    
-                url: `?s=GMCL1`,                 
-            }).then(function(resp) {
-                setAtualiza(atualiza + 1) 
-            }).catch(function(error) {
-                alert(`Falha no acesso aos produtos! Tente novamente.`);
-            })
+            (async () => {
+                const rawResponse = await fetch('http://192.168.0.100/?s=GMCL1', {
+                  method: 'POST',
+                  headers: {
+                    'Accept': '*/*',
+                    'Content-Type': 'text/plain'
+                  },
+                });
+                const content = await rawResponse.json();              
+                Alert.alert(content)
+            })();
         }
+        setAtualiza(1)    
+        if (count <= 20) {
+            setInterval(() => {
+                setCount(count + 1) 
+            }, 1000)
+        }else {
+            handleStop();
+        }     
 
+    }, [count]);
+
+
+
+/*
+    useEffect(() => {
+        
+        setBaseUrl('https://192.168.0.100/?s=GMCL1') 
+
+        fetch(baseUrl)
+            .then((response) => response.json())
+            .then((json) => console.log(json));
+        
         if (count <= 20) {
             setInterval(() => {
                 setCount(count + 1) 
@@ -42,17 +66,20 @@ export default function Cronometro() {
          
     }, [count]);
 
+*/
     const handleStop = () => {
-    
-        apicontrol({
-            method: 'post',    
-            url: `?s=GMCD1`,                 
-        }).then(function(resp) {
-            setAtualiza(atualiza + 1)
-        }).catch(function(error) {
-            alert(`Falha no acesso aos produtos! Tente novamente.`);
-        })
-            
+        (async () => {
+            const rawResponse = await fetch('http://192.168.0.100/?s=GMCD1', {
+              method: 'POST',
+              headers: {
+                'Accept': '*/*',
+                'Content-Type': 'text/plain'
+              },
+            });
+            const content = await rawResponse.json();              
+            //console.log(content);
+        })();
+
         api.post('newconsumo', {
             conUsrId: local.idUsr,
             conPrdId: local.idPro,
@@ -71,7 +98,7 @@ export default function Cronometro() {
     return(
         <View style={styles.container}>
             <Text style={styles.txtContador}>
-                Teste de contador
+                {baseUrl}
             </Text>
             <Text style={styles.txtContador}>
                 {count}
