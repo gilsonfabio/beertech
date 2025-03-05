@@ -43,6 +43,11 @@ export default function Prodetalhe(){
     const [produtos, setProdutos] = useState<Array<produtoProps>>([]);
     const local = useLocalSearchParams();
 
+    const [data, setData] = useState<string | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+
     const [proAvatar, setProAvatar] = useState('');
     const [proDescricao, setProDescricao] = useState('');
     const [proReferencia, setProReferencia] = useState('');
@@ -101,7 +106,9 @@ export default function Prodetalhe(){
         }).catch(function(error) {
             alert(`Falha no acesso ao produto! Tente novamente.`);
         })       
-                                  
+        
+        
+        
     }, []);
 
     useEffect(() => {
@@ -122,17 +129,39 @@ export default function Prodetalhe(){
     const postData = () => {
         //console.log('2');
         
-        fetch('http://192.168.0.100/?s=GMCL1', {
-            method: 'POST',
-        })
-        .then((response) => response.json())
-        .then((json) => console.log('Requisição ok!'));
+        //fetch('http://192.168.0.100/?s=GMCL1')
+        //    .then(response => response.text()) // ou .json() se for JSON
+        //    .then(data => console.log('Resposta:', data))
+        //.catch(error => console.error('Erro na requisição:', error));
+
         //console.log('3');
     };
 
     async function onPressPeq() {
         //console.log('1')
-        postData();
+        
+        const fetchData = async () => {
+            try {
+              const response = await fetch("http://192.168.0.100/?s=GMCL5");
+          
+              if (!response.ok) {
+                throw new Error(`Erro na requisição: ${response.status}`);
+              }
+          
+              const text = await response.text();
+              console.log("Resposta da API:", text); // Debug
+              setData(text || "Resposta vazia");
+            } catch (error: any) {
+              console.error("Erro ao buscar dados:", error);
+              setError(error.message);
+            } finally {
+              setLoading(false);
+            }
+          };
+      
+        fetchData();
+
+        //postData();
         //console.log('4')
         setAtualiza(atualiza + 1 );
         if (usrSaldo >= proVdaPeq) {

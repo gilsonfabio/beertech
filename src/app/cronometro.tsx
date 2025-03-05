@@ -11,6 +11,10 @@ export default function Cronometro() {
     const local = useLocalSearchParams();
     const navigation = useNavigation();
 
+    const [data, setData] = useState<string | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
     const [segundos, setSegundos] = useState(0);
     const [minutos, setMinutos] = useState(0);
     const [customInterval, setCustomInterval] = useState<NodeJS.Timer>();
@@ -57,15 +61,26 @@ export default function Cronometro() {
 
 */
     const handleStop = () => {
-        const rawResponse = fetch('http://192.168.0.100/?s=GMCD1', {
-            method: 'POST',
-            headers: {
-                'Accept': '*/*',
-                'Content-Type': 'text/plain'
-            },
-        });
-        const content = rawResponse;              
-        //console.log(content);
+        const fetchData = async () => {
+            try {
+              const response = await fetch("http://192.168.0.100/?s=GMCD5");
+          
+              if (!response.ok) {
+                throw new Error(`Erro na requisição: ${response.status}`);
+              }
+          
+              const text = await response.text();
+              console.log("Resposta da API:", text); // Debug
+              setData(text || "Resposta vazia");
+            } catch (error: any) {
+              console.error("Erro ao buscar dados:", error);
+              setError(error.message);
+            } finally {
+              setLoading(false);
+            }
+          };
+      
+        fetchData();
     
         api.post('newconsumo', {
             conUsrId: local.idUsr,
