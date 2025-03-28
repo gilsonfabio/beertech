@@ -22,10 +22,13 @@ type produtoProps = {
     proUltCusto: number;
     proQtdPeq: number; 
     proPreVdaPeq: number; 
+    proTmpPeq: number;
     proQtdMed: number; 
     proPreVdaMed: number;
+    proTmpMed: number,
     proQtdGrd: number;  
-    proPreVdaGrd: number; 
+    proPreVdaGrd: number;
+    proTmpGrd: number; 
     proTributacao: string; 
     proCodCst: string; 
     proStatus: string; 
@@ -53,10 +56,13 @@ export default function Prodetalhe(){
     const [proReferencia, setProReferencia] = useState('');
     const [proVdaPeq, setProVdaPeq] = useState(0);
     const [proQtdPeq, setProQtdPeq] = useState(0);
+    const [proTmpPeq, setProTmpPeq] = useState(0);
     const [proVdaMed, setProVdaMed] = useState(0);
     const [proQtdMed, setProQtdMed] = useState(0);
+    const [proTmpMed, setProTmpMed] = useState(0);
     const [proVdaGrd, setProVdaGrd] = useState(0);
     const [proQtdGrd, setProQtdGrd] = useState(0);
+    const [proTmpGrd, setProTmpGrd] = useState(0);
     const [atualiza, setAtualiza] = useState(0);
     const [qtde, setQtde] = useState(0);
     const [vlrTotal, setVlrTotal] = useState(0);
@@ -99,10 +105,13 @@ export default function Prodetalhe(){
             setProReferencia(response.data.proReferencia)
             setProVdaPeq(response.data.proPreVdaPeq)
             setProQtdPeq(response.data.proQtdPeq)
+            setProTmpPeq(response.data.proTmpPeq)
             setProVdaMed(response.data.proPreVdaMed)
             setProQtdMed(response.data.proQtdMed)
+            setProTmpMed(response.data.proTmpMed)            
             setProVdaGrd(response.data.proPreVdaGrd)
-            setProQtdGrd(response.data.proQtdGrd)             
+            setProQtdGrd(response.data.proQtdGrd)
+            setProTmpGrd(response.data.proTmpGrd)             
         }).catch(function(error) {
             alert(`Falha no acesso ao produto! Tente novamente.`);
         })       
@@ -166,7 +175,7 @@ export default function Prodetalhe(){
         setAtualiza(atualiza + 1 );
         if (usrSaldo >= proVdaPeq) {
             try {
-              router.push(`/cronometro?idUsr=${local.idUsr}&name=${nomUsuario}&idPro=${local.id}&qtde=${proQtdPeq}&valor=${proVdaPeq}&saldo=${usrSaldo}` as any );         
+              router.push(`/cronometro?idUsr=${local.idUsr}&name=${nomUsuario}&idPro=${local.id}&qtde=${proQtdPeq}&valor=${proVdaPeq}&tempo=${proTmpPeq}&saldo=${usrSaldo}` as any );         
             } catch (error) {
                 if (isAxiosError(error)) {
                     return Alert.alert(error.response?.data)
@@ -182,7 +191,7 @@ export default function Prodetalhe(){
         setAtualiza(atualiza + 1 );
         if (usrSaldo >= proVdaMed) {
             try {
-              router.push(`/cronometro?idUsr=${local.idUsr}&idPro=${local.id}&qtde=${proQtdMed}&valor=${proVdaMed}` as any );         
+              router.push(`/cronometro?idUsr=${local.idUsr}&idPro=${local.id}&qtde=${proQtdMed}&valor=${proVdaMed}&tempo=${proTmpMed}&saldo=${usrSaldo}` as any );         
             } catch (error) {
                 if (isAxiosError(error)) {
                     return Alert.alert(error.response?.data)
@@ -198,7 +207,7 @@ export default function Prodetalhe(){
         setAtualiza(atualiza + 1 );
         if (usrSaldo >= proVdaPeq) {
             try {
-              router.push(`/cronometro?idUsr=${local.idUsr}&idPro=${local.id}&qtde=${proQtdGrd}&valor=${proVdaGrd}` as any );         
+              router.push(`/cronometro?idUsr=${local.idUsr}&idPro=${local.id}&qtde=${proQtdGrd}&valor=${proVdaGrd}&tempo=${proTmpGrd}&saldo=${usrSaldo}` as any );         
             } catch (error) {
                 if (isAxiosError(error)) {
                     return Alert.alert(error.response?.data)

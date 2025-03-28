@@ -26,9 +26,9 @@ export default function Cronometro() {
     let titulo = 'Consumo';
     
     useEffect(() => {
- 
+        let limiteTmp = Number(local.tempo);
         setAtualiza(1)    
-        if (count <= 20) {
+        if (count <= limiteTmp) {
             setInterval(() => {
                 setCount(count + 1) 
             }, 1000)
